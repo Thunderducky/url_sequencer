@@ -17,7 +17,8 @@
     const makeAlpha = () => {
       return Math.random().toString(32).replace(/[^a-z]+/g, '')
     };
-    const fakeAjax = (time, url, failureRate = 0) => {
+    // failure rate should be between 0 and 1 for proper use
+    const fakeAjax = (time, url, failureRate = -1) => {
       return new Promise(function(resolve, reject){
         setTimeout(() => {
           console.log(`URL resolved: ${url}`);
