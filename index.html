@@ -48,10 +48,10 @@
         return p.then((lastPayload) => {
           console.log(lastPayload);
           payloads.push(lastPayload);
-          return fakeAjaxMaker(url)  // soldier on
+          return promiseMaker(url)  // soldier on
         }).catch((err) => {
           payloads.push(false); // could really push whatever here
-          return fakeAjaxMaker(url);  // soldier on
+          return promiseMaker(url);  // soldier on
         })
       }, Promise.resolve())
       .then((payload) => {
