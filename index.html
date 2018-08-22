@@ -36,7 +36,11 @@
       });
     };
 
-  const callSequentially = (urls) => {
+  const fakeAjaxMaker = (url) => {
+    return fakeAjax(1000, url, 0.2)
+  }
+
+  const callSequentially = (urls, promiseMaker = fakeAjaxMaker) => {
     return new Promise((resolve, reject) => {
       const payloads = []
       urls.reduce((p, url) => {
@@ -44,10 +48,10 @@
         return p.then((lastPayload) => {
           console.log(lastPayload);
           payloads.push(lastPayload);
-          return fakeAjax(1000, url, 0.2)  // soldier on
+          return fakeAjaxMaker(url)  // soldier on
         }).catch((err) => {
           payloads.push(false); // could really push whatever here
-          return fakeAjax(1000, url, 0.2);  // soldier on
+          return fakeAjaxMaker(url);  // soldier on
         })
       }, Promise.resolve())
       .then((payload) => {
